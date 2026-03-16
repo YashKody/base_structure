@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.2"
+  change_project_name:
+    dependency: "direct dev"
+    description:
+      name: change_project_name
+      sha256: bba263f551ceccaa1a57865fdbce3a87cc9ee2f6608e135d7e172a25eb759971
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   characters:
     dependency: transitive
     description:
