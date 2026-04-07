@@ -1,4 +1,4 @@
-import 'package:base_structure/ui/utils/widgets/common_button..dart';
+import 'package:base_structure/ui/utils/widgets/common_button.dart';
 import 'package:base_structure/ui/utils/widgets/common_text.dart';
 import 'package:flutter/material.dart';
 

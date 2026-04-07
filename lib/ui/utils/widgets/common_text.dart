@@ -41,7 +41,11 @@ class CommonText extends StatelessWidget {
           textStyle ??
           TextStyle(
             overflow: textOverflow ?? TextOverflow.ellipsis,
-            color: color ?? Colors.black,
+            color:
+                color ??
+                (Theme.of(context).brightness == Brightness.light
+                    ? AppColors.clrBlack000000
+                    : AppColors.clrWhiteFFFFFF),
             fontWeight: fontWeight ?? FontWeight.w400,
             fontSize: fontSize ?? 16,
             fontFamily: fontFamily ?? TextStyles.fontFamily,

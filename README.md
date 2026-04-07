@@ -70,3 +70,15 @@ flutter run
 ```
 
 ---
+
+---
+
+### 6. Clean git history
+
+Before committing clear the git history and re-init the repo with remote repo
+
+```bash
+rm -rf .git
+```
+
+---

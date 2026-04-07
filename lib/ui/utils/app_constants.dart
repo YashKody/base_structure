@@ -64,6 +64,16 @@ class AppConstants {
   static const strAccept = "Accept";
   static const strAlreadyHaveAnAccount = "Already have an account ?";
   static const strEmptyContents = "Empty Contents";
+  static const strIsDarkMode = "isDarkMode";
+  static const strInvalidData = "Invalid Data";
+  static const strTooLarge = "Too Large";
+  static const strSelectAll = "Select All";
+  static const strIsFirstLaunch = "isFirstLaunch";
+  static const strLight = "Light";
+  static const strDark = "Dark";
+  static const strCancel = "Cancel";
+  static const strOk = "Ok";
+  static const strEmptyData = "Empty Data";
 
   /// - Functions
   void showLog(String logMessage) {
@@ -90,11 +100,23 @@ class AppConstants {
     return DateFormat("hh:mm a").format(dateTime);
   }
 
+  static String getDayMonthYear(DateTime dateTime) {
+    return DateFormat("dd MMM yyyy").format(dateTime);
+  }
+
+  static String getMonth(int monthNum) {
+    return DateFormat("MMMM").format(DateTime(DateTime.now().year, monthNum));
+  }
+
+  static String getMonthYear (DateTime dateTime) {
+    return DateFormat("MMMM yyyy").format(dateTime);
+  }
+
   /// - Validation Logic
   /// Only form fields validation which can be used throughout the application
   
   String? validatePhoneNumber(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.isEmpty || value.trim().isEmpty) {
       return strEmptyPhoneNoError; // Text field cannot be empty
     }
     if (!phoneRegex.hasMatch(value)) {
@@ -105,7 +127,7 @@ class AppConstants {
   }
 
   String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.isEmpty || value.trim().isEmpty) {
       return strEmptyPasswordError; // Text field cannot be empty
     }
     if (!passwordRegex.hasMatch(value)) {
@@ -116,7 +138,7 @@ class AppConstants {
   }
 
   String? validatePasswordInDetail (String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.isEmpty || value.trim().isEmpty) {
       return strEmptyPasswordError; // Text field cannot be empty
     }
     if (value.length < 8 || value.length > 16) {
@@ -138,7 +160,7 @@ class AppConstants {
   }
 
   String? validateFullName(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.isEmpty || value.trim().isEmpty) {
       return strEmptyNameError; // Text field cannot be empty
     }
     if (!fullNameRegex.hasMatch(value)) {

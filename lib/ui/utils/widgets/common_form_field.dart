@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 class CommonFormField extends StatefulWidget {
   final String hintText; // Hint Text
   final TextEditingController?
-  controller; // Text editing controller to use content of the text field
+  controller; // Text editing onboarding to use content of the text field
   final bool? obscureText; // Decide whether to show contents of text field
   final TextInputType? inputType; // Keyboard Type
   final ValueChanged<String>?
@@ -21,8 +21,16 @@ class CommonFormField extends StatefulWidget {
   final void Function(String)? onFieldSubmitted; // decides which action to perform on submitting
   final List<String> ?autofillHints; // Keyboards suggest autofill according to the type
   final AutovalidateMode? autovalidate; // decides which type of auto validation to perform
-  final InputBorder? border;
-  final InputBorder? focusedBorder;
+  final InputBorder? border; // Default border style
+  final InputBorder? focusedBorder; // Border style when tapped
+  final TextStyle? textStyle; // Text style of the field content
+  final TextStyle? hintTextStyle; // Text style of the hint text
+  final bool readOnly; // Decides if form field is read only
+  final void Function()? onTap; // Custom behavior when tapped
+  final String? value; // Initial value of form field
+  final bool autofocus; // Decides whether the form field is selected by default
+  final FocusNode? focusNode; // Focus Node of the text field
+  final int? maxLength; // Max length of the content of the form field
 
   const CommonFormField({
     super.key,
@@ -40,6 +48,14 @@ class CommonFormField extends StatefulWidget {
     this.autovalidate, 
     this.border, 
     this.focusedBorder,
+    this.textStyle,
+    this.hintTextStyle,
+    this.readOnly = false,
+    this.onTap,
+    this.value,
+    this.autofocus = false,
+    this.focusNode,
+    this.maxLength
   });
 
   @override
@@ -59,11 +75,22 @@ class _CommonFormFieldState extends State<CommonFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: widget.maxLength,
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      initialValue: widget.value,
+      onTap: widget.onTap,
+      readOnly: widget.readOnly,
       controller: widget.controller,
       onTapOutside: (_) {
-        FocusManager.instance.primaryFocus!
-            .unfocus(); // On tapping outside, unfocus
+        if (widget.focusNode == null) {
+          FocusManager.instance.primaryFocus!
+              .unfocus(); // On tapping outside, unfocus
+        } else {
+          widget.focusNode?.unfocus();
+        }
       },
+      style: widget.textStyle,
       autovalidateMode: widget.autovalidate ?? AutovalidateMode.onUserInteraction,
       autofillHints: widget.autofillHints,
       onChanged: widget.onChangedFunction,
@@ -75,13 +102,13 @@ class _CommonFormFieldState extends State<CommonFormField> {
       textInputAction: widget.textInputAction ?? TextInputAction.next,
       onFieldSubmitted: widget.onFieldSubmitted ?? (value) => {},
       decoration: InputDecoration(
-        border: widget.border ?? OutlineInputBorder(
+        border: widget.border ?? UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.clrGreyB5B5B5),
         ),
-        focusedBorder: widget.focusedBorder ?? OutlineInputBorder(
+        focusedBorder: widget.focusedBorder ?? UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.clrBlack000000),
         ),
-        hintStyle: TextStyle(fontSize: 14),
+        hintStyle: widget.hintTextStyle ?? TextStyle(fontSize: 14),
         hintText: widget.hintText,
         suffixIcon:
             obscure !=
